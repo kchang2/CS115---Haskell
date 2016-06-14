@@ -1,0 +1,101 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+
+\usepackage{enumitem, graphicx, amsmath, subcaption, wrapfig}
+\usepackage[margin=1.11in]{geometry}
+\setlist[description]{leftmargin=\parindent,labelindent=\parindent}
+\graphicspath{ {Users/kaichang/Desktop/ph20} }
+\numberwithin{equation}{subsection}
+
+
+%%%%%% Making LaTeX differentiation / integration much easier %%%%%%%
+%%%%% See http://www.latex-community.org/forum/viewtopic.php?f=46&t=10000#p38694 %%%%%
+%%%% or C. Beccari. TUGBoat 18 (1997) No. 1. %%%%
+\makeatletter
+\providecommand*{\diff}%
+        {\@ifnextchar^{\DIfF}{\DIfF^{}}}
+\def\DIfF^#1{%
+        \mathop{\mathrm{\mathstrut d}}%
+                \nolimits^{#1}\gobblespace
+}
+\def\gobblespace{%
+        \futurelet\diffarg\opspace}
+\def\opspace{%
+        \let\DiffSpace\!%
+        \ifx\diffarg(%
+                \let\DiffSpace\relax
+        \else
+                \ifx\diffarg\[%
+                        \let\DiffSpace\relax
+                \else
+                        \ifx\diffarg\{%
+                                \let\DiffSpace\relax
+                        \fi\fi\fi\DiffSpace}   
+%%%%%% end here %%%%%%%
+
+%%%% force indent command of paragraph in section %%%%
+\newcommand{\forceindent}{\leavevmode{\parindent=1em\indent}}
+%%%% end here %%%%
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{CS 115}%replace X with the appropriate number
+\author{Kai Chang\\ %replace with your name
+SP 2016} %if necessary, replace with your course title
+ 
+\maketitle
+
+
+%%%%%%%%%%%%
+\section{Week 1}
+
+%%%%%%%%%%%%
+\section{Week 2}
+\subsection{Monday}
+\begin{itemize}
+\item Packages in Haskell are known as \textit{Hackages}.
+\item \textit{:t} stands for type to identify types for variable form.
+\item \textit{pointfree} gets rid of all the arguments, just put in your code and then it does what Mathematica is "FullSimplify".
+\item goes with input $\rightarrow$ input $\rightarrow$ etc... $\rightarrow$ output
+\item \$ is very low precedence, getting us out of writing parenthesis, allowing us to chain things in a nice way.
+\item . allows us to remove the redundancy of variables in instancing and computational lines, where you can simply replace the chained variable as a dot. (ie. apply x = p * x + y * x, to apply =  p . y
+\item ghci package.hs over ghci and then loading program :l package.hs
+\end{itemize}
+
+\end{document}
+
+\section{Week 4}
+ 14
+down vote
+accepted
+	
+
+You got it, pretty much. So the rest of the deal is designing the predicate function for your list. Assuming you already had a list called xs and a predicate function p, all you'd have to do is
+
+    filter p xs.
+
+Often, you'll see p defined as an anonymous, or lambda, expression, like so:
+
+    filter (\n -> n `mod` 2 == 0) xs.
+
+It is not necessary, and it might be helpful as a beginner to define named functions.
+
+    isEven n = n `mod` 2 == 0
+
+    evenListNumbers xs = filter isEven xs
+
+    evenListNumbers [1,2,3,4]
+
+Which is this [2,4].
+
+So a predicate function for a given list filter takes a list element and returns a boolean value. If it's true, the element is retained (or added to the resulting list), and if it's false, it is passed over.
+
+%%%%%%
